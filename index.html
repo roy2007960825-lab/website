@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STUDENT_DOSSIER // CS & LOGIC.2026</title>
+
+  <!-- Typography: Space Grotesk (Display), JetBrains Mono (Technical Labels), Plus Jakarta Sans (Editorial Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            ink: '#111827',
+            canvas: '#f5f5f0',
+            brutal: {
+              yellow: '#FEF08A',
+              accentYellow: '#FDE047',
+              mint: '#A7F3D0',
+              emerald: '#059669',
+              lilac: '#ECD9FF',
+              peach: '#FED7AA',
+              red: '#EF4444',
+              surface: '#FFFFFF',
+              cardBg: '#FBFBFA',
+              border: '#111827'
+            }
+          },
+          boxShadow: {
+            brutal: '4px 4px 0px #111827',
+            'brutal-lg': '8px 8px 0px #111827',
+            'brutal-sm': '2.5px 2.5px 0px #111827',
+            'brutal-hover': '6px 6px 0px #111827',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Dot Matrix Technical Blueprint Pattern */
+    .bg-grid-blueprint {
+      background-color: #f6f6f2;
+      background-image: radial-gradient(#111827 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+    }
+
+    /* Tactile Brutalist Micro-Interactions */
+    .tactile-btn {
+      transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tactile-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #111827;
+    }
+    .tactile-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px #111827;
+    }
+
+    .tactile-chip {
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .tactile-chip:hover {
+      transform: translate(-1.5px, -1.5px);
+      box-shadow: 4px 4px 0px #111827;
+    }
+    .tactile-chip:active {
+      transform: translate(1.5px, 1.5px);
+      box-shadow: 1px 1px 0px #111827;
+    }
+
+    /* Barcode aesthetic element */
+    .barcode-strip {
+      background: repeating-linear-gradient(
+        90deg,
+        #111827 0,
+        #111827 2px,
+        transparent 2px,
+        transparent 5px,
+        #111827 5px,
+        #111827 9px,
+        transparent 9px,
+        transparent 11px,
+        #111827 11px,
+        #111827 15px,
+        transparent 15px,
+        transparent 17px
+      );
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-grid-blueprint text-ink font-sans min-h-screen flex flex-col justify-between selection:bg-brutal-accentYellow selection:text-ink antialiased">
+
+  <!-- Top Utilities / System Bar -->
+  <header class="w-full border-b-[2.5px] border-ink bg-white sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between text-xs font-mono">
+      <div class="flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-ink animate-pulse inline-block"></span>
+        <span class="font-bold tracking-wider uppercase text-ink">SYS.NODE // ONLINE</span>
+        <span class="hidden md:inline-block text-gray-300">|</span>
+        <span id="systemClock" class="hidden md:inline-block font-semibold text-gray-600">UTC+8 --:--:--</span>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <span class="px-2 py-0.5 bg-brutal-accentYellow border border-ink font-bold text-[11px] shadow-[1.5px_1.5px_0px_#111827]">CS &amp; LOGIC 2026</span>
+        <button onclick="window.print()" class="tactile-chip hidden sm:flex items-center gap-1 px-2 py-0.5 bg-canvas border border-ink font-bold text-[11px] shadow-brutal-sm cursor-pointer hover:bg-brutal-yellow">
+          <span class="material-symbols-outlined text-xs">print</span>
+          PRINT DOSSIER
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Canvas -->
+  <main class="flex-grow flex items-center justify-center p-3 sm:p-6 md:p-10 my-4" id="mainContainer">
+    
+    <!-- Dossier Master Card Container -->
+    <article class="w-full max-w-4xl bg-white border-[3px] border-ink rounded-lg shadow-brutal-lg overflow-hidden my-auto" id="dossierCard">
+      
+      <!-- 1. Header / Dossier Ribbon -->
+      <header class="bg-[#ECEEF4] border-b-[3px] border-ink px-4 py-3 flex flex-wrap items-center justify-between gap-3 select-none">
+        <div class="flex items-center gap-2.5">
+          <!-- Window Dots -->
+          <div class="flex items-center gap-1.5">
+            <span class="w-3.5 h-3.5 rounded-full border-2 border-ink bg-brutal-red inline-block"></span>
+            <span class="w-3.5 h-3.5 rounded-full border-2 border-ink bg-brutal-accentYellow inline-block"></span>
+            <span class="w-3.5 h-3.5 rounded-full border-2 border-ink bg-emerald-400 inline-block"></span>
+          </div>
+          <span id="ribbonTitle" class="ml-2 font-mono text-xs sm:text-sm font-bold tracking-widest uppercase text-ink">
+            STUDENT_DOSSIER // COMPUTE.BUILD.LEARN
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span id="ribbonStatus" class="font-mono text-xs bg-white border-2 border-ink px-2.5 py-0.5 shadow-brutal-sm uppercase font-bold tracking-wider">
+            STATUS: ACTIVE // ALWAYS LEARNING
+          </span>
+          <div class="w-6 h-6 border-2 border-ink bg-white flex items-center justify-center shadow-brutal-sm">
+            <span class="material-symbols-outlined text-sm text-ink">folder</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Dossier Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-12 bg-white">
+        
+        <!-- Left Column: Student Identity & Direct Action (md: 5 cols) -->
+        <aside class="md:col-span-5 lg:col-span-4 bg-brutal-cardBg border-b-[3px] md:border-b-0 md:border-r-[3px] border-ink p-6 sm:p-7 flex flex-col justify-between gap-6">
+          <div class="w-full flex flex-col items-center sm:items-start gap-4">
+            
+            <!-- Avatar Frame with Hard Offset Shadow & Stamp -->
+            <div class="relative mt-1">
+              <div class="w-36 h-36 rounded-md border-[2.5px] border-ink shadow-[5px_5px_0px_#111827] bg-brutal-accentYellow overflow-hidden group">
+                <img id="profileAvatar" 
+                     src="./pic.jpeg" 
+                     alt="Computer science student portrait with high-contrast Neo-Brutalist treatment" 
+                     class="w-full h-full object-cover grayscale contrast-125 transition-transform duration-300 group-hover:scale-105"
+                     onerror="this.onerror=null; this.src='./avatar.jpg';">
+              </div>
+              <div class="absolute -bottom-2.5 -right-2.5 bg-brutal-mint border-2 border-ink p-1.5 shadow-brutal-sm rounded flex items-center justify-center rotate-3" title="Computer Science">
+                <span class="material-symbols-outlined text-lg text-ink">terminal</span>
+              </div>
+            </div>
+
+            <!-- Availability Status Pill -->
+            <div class="w-full flex justify-center sm:justify-start pt-1">
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border-2 border-ink bg-brutal-mint shadow-brutal-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-brutal-emerald border border-ink animate-pulse"></span>
+                <span id="availabilityStatus" class="font-mono text-xs text-ink font-bold tracking-tight">
+                  Open to Projects // Collaboration // Learning
+                </span>
+              </div>
+            </div>
+
+            <!-- Location Badge -->
+            <div class="flex items-center gap-1.5 text-gray-700 font-mono text-xs font-semibold">
+              <span class="material-symbols-outlined text-base text-ink">location_on</span>
+              <span id="profileLocation">Taiwan</span>
+            </div>
+
+            <!-- Email Pill with Click-to-Copy Micro-interaction -->
+            <div class="w-full">
+              <button id="copyEmailBtn" 
+                      class="w-full tactile-chip group flex items-center justify-between gap-2 px-3 py-2.5 bg-white border-2 border-ink shadow-brutal-sm rounded cursor-pointer text-left font-mono text-xs" 
+                      title="Click to copy email address" 
+                      type="button">
+                <div class="flex items-center gap-2 overflow-hidden">
+                  <span class="material-symbols-outlined text-base text-ink">mail</span>
+                  <span id="profileEmail" class="font-semibold truncate text-ink">your-email@example.com</span>
+                </div>
+                <span id="copyIcon" class="material-symbols-outlined text-base text-ink group-hover:scale-110 transition-transform">content_copy</span>
+              </button>
+              <div id="copyNotice" class="text-center font-mono text-[10px] text-emerald-700 font-bold mt-1.5 opacity-0 transition-opacity duration-200">
+                COPIED TO CLIPBOARD!
+              </div>
+            </div>
+
+            <!-- Technical Barcode & Archive Reference -->
+            <div class="w-full pt-1 border-t-2 border-dashed border-gray-300">
+              <div class="barcode-strip h-6 w-full opacity-75"></div>
+              <div class="flex justify-between items-center text-[9px] font-mono text-gray-500 mt-1 uppercase">
+                <span>REF: CS.LOGIC.SYS</span>
+                <span id="badgeIdShort">ID // CS.STUDENT.2026</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 8. Clear CTA Button for CV / Portfolio Request -->
+          <div class="w-full pt-2">
+            <a id="ctaButton" 
+               href="mailto:your-email@example.com?subject=Project%20Collaboration" 
+               class="w-full tactile-btn flex items-center justify-center gap-2.5 py-3.5 px-4 bg-brutal-yellow text-ink font-display text-xs sm:text-sm uppercase tracking-wider border-[2.5px] border-ink shadow-brutal rounded text-center font-extrabold hover:bg-brutal-accentYellow">
+              <span class="material-symbols-outlined text-lg">bolt</span>
+              <span id="ctaText">CONNECT / VIEW PORTFOLIO</span>
+            </a>
+          </div>
+        </aside>
+
+        <!-- Right Column: Academic Dossier, Bio, & Network (md: 7 or 8 cols) -->
+        <section class="md:col-span-7 lg:col-span-8 p-6 sm:p-8 flex flex-col justify-between gap-6 bg-white">
+          
+          <!-- Top Header: Name & Verified Student Badge -->
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b-2 border-ink pb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <h1 id="identityName" class="font-display text-3xl sm:text-4xl lg:text-5xl text-ink font-extrabold uppercase tracking-tight leading-none">
+                  Roy Chen
+                </h1>
+              </div>
+              <p id="identityDepartment" class="font-display text-sm sm:text-base text-ink font-bold mt-2 tracking-tight text-amber-700">
+                National Sun Yat-sen University • Computer Science • Logic-Driven Builder
+              </p>
+            </div>
+
+            <!-- Stamp Badge -->
+            <div class="self-start px-3 py-1 bg-amber-50 border-2 border-ink shadow-brutal-sm rounded -rotate-1">
+              <span class="font-mono text-xs font-bold uppercase text-ink flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm text-emerald-600">verified</span>
+                <span id="badgeId">ID // CS.STUDENT.2026</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- 3. Academic Statement -->
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-[11px] text-gray-500 uppercase font-bold tracking-widest">// ACADEMIC STATEMENT</span>
+              <span class="flex-grow border-b border-gray-200 border-dashed"></span>
+            </div>
+            <p id="academicStatement" class="font-sans text-sm sm:text-base text-ink leading-relaxed font-medium">
+              Computer science student driven by curiosity, logic, and hands-on experimentation. I turn abstract concepts into working systems through C++, digital logic, Verilog, and continuous self-learning—always asking not only how something works, but why.
+            </p>
+          </div>
+
+          <!-- 4. Highlight Box: Motto & Current Role -->
+          <div class="bg-amber-50 border-[2.5px] border-ink p-4 sm:p-5 rounded shadow-brutal flex items-start gap-3.5">
+            <span class="text-2xl select-none" role="img" aria-label="Microchip">⚙️</span>
+            <div class="font-sans text-sm sm:text-base text-ink">
+              <div class="font-bold text-ink">
+                <span class="uppercase tracking-wider font-mono text-xs text-gray-600 block sm:inline mr-1">MOTTO:</span>
+                "<span id="highlightMotto">UNDERSTAND IT. BUILD IT. BREAK IT. LEARN AGAIN.</span>"
+              </div>
+              <div class="mt-1.5 pt-1.5 sm:mt-1 sm:pt-0 sm:border-l-2 sm:border-ink sm:pl-2.5 sm:inline-block font-semibold text-gray-800">
+                <span id="highlightRole">Currently exploring C++, data structures, digital logic, Verilog/Vivado, linear algebra, and the foundations behind modern computing systems.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Skills & Focus Areas -->
+          <div>
+            <div class="font-mono text-[11px] text-gray-500 uppercase font-bold tracking-widest mb-2.5">// SKILLS &amp; FOCUS AREAS</div>
+            <div id="skillsContainer" class="flex flex-wrap gap-2">
+              <!-- Dynamically populated from JSON -->
+            </div>
+          </div>
+
+          <!-- 7. Social Links Grid -->
+          <div>
+            <div class="font-mono text-[11px] text-gray-500 uppercase font-bold tracking-widest mb-2.5">// NETWORK NODES</div>
+            <div id="socialContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <!-- Dynamically populated from JSON -->
+            </div>
+          </div>
+
+        </section>
+      </div>
+
+      <!-- 6. Metrics Section (Separated by dashed ink border) -->
+      <footer class="border-t-[2.5px] border-dashed border-ink bg-brutal-cardBg p-5 sm:p-6">
+        <div id="metricsContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4">
+          <!-- Dynamically populated from JSON -->
+        </div>
+      </footer>
+
+    </article>
+  </main>
+
+  <!-- 9. Footer -->
+  <footer class="w-full py-6 px-4 border-t-[2.5px] border-ink bg-white mt-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+      <div id="footerCopyright" class="font-mono text-xs font-bold tracking-wider text-ink uppercase">
+        © 2026 STUDENT DOSSIER // THINK • CODE • BUILD • REPEAT
+      </div>
+      <nav class="flex items-center gap-5 text-xs font-mono font-semibold">
+        <a href="#dossierCard" class="text-ink hover:underline">TOP</a>
+        <a href="#copyEmailBtn" class="text-ink hover:underline">CONTACT</a>
+        <span class="text-gray-300">/</span>
+        <span class="text-gray-500">FORMAT: DOSSIER.2026</span>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Complete Raw Data JSON Block -->
+  <script id="portfolio-data" type="application/json">
+{
+  "meta": {
+    "pageTitle": "STUDENT_DOSSIER // CS & LOGIC.2026",
+    "ribbonTitle": "STUDENT_DOSSIER // COMPUTE.BUILD.LEARN",
+    "status": "STATUS: ACTIVE // ALWAYS LEARNING"
+  },
+  "profile": {
+    "avatarUrl": "./pic.jpeg",
+    "avatarAlt": "Computer science student portrait with high-contrast Neo-Brutalist treatment",
+    "availabilityStatus": "Open to Projects // Collaboration // Learning",
+    "location": "Taiwan",
+    "email": "your-email@example.com",
+    "ctaButton": {
+      "text": "CONNECT / VIEW PORTFOLIO",
+      "link": "mailto:your-email@example.com?subject=Project%20Collaboration"
+    }
+  },
+  "identity": {
+    "name": "Roy Chen",
+    "departmentPositioning": "National Sun Yat-sen University • Computer Science • Logic-Driven Builder",
+    "badgeId": "ID // CS.STUDENT.2026",
+    "academicStatement": "Computer science student driven by curiosity, logic, and hands-on experimentation. I turn abstract concepts into working systems through C++, digital logic, Verilog, and continuous self-learning—always asking not only how something works, but why."
+  },
+  "highlightBox": {
+    "motto": "UNDERSTAND IT. BUILD IT. BREAK IT. LEARN AGAIN.",
+    "currentRole": "Currently exploring C++, data structures, digital logic, Verilog/Vivado, linear algebra, and the foundations behind modern computing systems."
+  },
+  "skillsTags": [
+    "#Cpp",
+    "#Verilog",
+    "#DigitalLogic",
+    "#ComputationalThinking",
+    "#SelfLearning",
+    "#ProblemSolving",
+    "#Teamwork"
+  ],
+  "socialLinks": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com"
+    },
+    {
+      "platform": "Portfolio",
+      "url": "#"
+    }
+  ],
+  "metrics": [
+    {
+      "value": "PR99",
+      "label": "Computational Thinking"
+    },
+    {
+      "value": "905",
+      "label": "TOEIC Score"
+    },
+    {
+      "value": "C++",
+      "label": "Core Programming Language"
+    },
+    {
+      "value": "∞",
+      "label": "Curiosity Level"
+    }
+  ],
+  "footer": {
+    "copyright": "© 2026 STUDENT DOSSIER // THINK • CODE • BUILD • REPEAT"
+  }
+}
+  </script>
+
+  <!-- Interactive Logic & Dynamic JSON Binding Engine -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Live System Clock
+      const clockEl = document.getElementById('systemClock');
+      function updateClock() {
+        if (!clockEl) return;
+        const now = new Date();
+        clockEl.textContent = 'UTC+8 ' + now.toLocaleTimeString('en-US', { hour12: false });
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      // SVG Icon Helper for Social Networks
+      function getSocialIconSvg(platform) {
+        const name = (platform || '').toLowerCase();
+        if (name.includes('github')) {
+          return '<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>';
+        }
+        if (name.includes('linkedin')) {
+          return '<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.79v8.37H6.46v-8.37M7.86 6.3a1.63 1.63 0 0 0-1.63 1.63c0 .9.73 1.63 1.63 1.63.9 0 1.63-.73 1.63-1.63 0-.9-.73-1.63-1.63-1.63Z"/></svg>';
+        }
+        if (name.includes('instagram')) {
+          return '<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>';
+        }
+        if (name.includes('portfolio') || name.includes('web') || name.includes('site')) {
+          return '<span class="material-symbols-outlined text-base">folder_special</span>';
+        }
+        return '<span class="material-symbols-outlined text-base">open_in_new</span>';
+      }
+
+      // 2. Dynamic JSON Binding Engine
+      try {
+        const rawData = document.getElementById('portfolio-data').textContent;
+        const data = JSON.parse(rawData);
+
+        // Meta & Document
+        if (data.meta) {
+          if (data.meta.pageTitle) document.title = data.meta.pageTitle;
+          if (data.meta.ribbonTitle) document.getElementById('ribbonTitle').textContent = data.meta.ribbonTitle;
+          if (data.meta.status) document.getElementById('ribbonStatus').textContent = data.meta.status;
+        }
+
+        // Profile Identity
+        if (data.profile) {
+          const avatar = document.getElementById('profileAvatar');
+          if (data.profile.avatarUrl) avatar.src = data.profile.avatarUrl;
+          if (data.profile.avatarAlt) avatar.alt = data.profile.avatarAlt;
+          if (data.profile.availabilityStatus) {
+            document.getElementById('availabilityStatus').textContent = data.profile.availabilityStatus;
+          }
+          if (data.profile.location) {
+            document.getElementById('profileLocation').textContent = data.profile.location;
+          }
+          if (data.profile.email) {
+            document.getElementById('profileEmail').textContent = data.profile.email;
+          }
+          if (data.profile.ctaButton) {
+            const ctaBtn = document.getElementById('ctaButton');
+            if (data.profile.ctaButton.link) ctaBtn.href = data.profile.ctaButton.link;
+            if (data.profile.ctaButton.text) document.getElementById('ctaText').textContent = data.profile.ctaButton.text;
+          }
+        }
+
+        // Identity
+        if (data.identity) {
+          if (data.identity.name) document.getElementById('identityName').textContent = data.identity.name;
+          if (data.identity.departmentPositioning) {
+            document.getElementById('identityDepartment').textContent = data.identity.departmentPositioning;
+          }
+          if (data.identity.badgeId) {
+            document.getElementById('badgeId').textContent = data.identity.badgeId;
+            document.getElementById('badgeIdShort').textContent = data.identity.badgeId;
+          }
+          if (data.identity.academicStatement) {
+            document.getElementById('academicStatement').textContent = data.identity.academicStatement;
+          }
+        }
+
+        // Highlight Box
+        if (data.highlightBox) {
+          if (data.highlightBox.motto) document.getElementById('highlightMotto').textContent = data.highlightBox.motto;
+          if (data.highlightBox.currentRole) document.getElementById('highlightRole').textContent = data.highlightBox.currentRole;
+        }
+
+        // Skills Tags
+        if (Array.isArray(data.skillsTags)) {
+          const container = document.getElementById('skillsContainer');
+          const chipColors = ['bg-white', 'bg-brutal-lilac', 'bg-white', 'bg-brutal-mint', 'bg-brutal-peach', 'bg-amber-100', 'bg-emerald-100'];
+          container.innerHTML = data.skillsTags.map((tag, idx) => {
+            const colorClass = chipColors[idx % chipColors.length];
+            return `<span class="tactile-chip px-3 py-1.5 ${colorClass} border-2 border-ink rounded-full shadow-brutal-sm font-mono text-xs uppercase font-bold text-ink">${tag}</span>`;
+          }).join('');
+        }
+
+        // Social Links
+        if (Array.isArray(data.socialLinks)) {
+          const socialContainer = document.getElementById('socialContainer');
+          const hoverColors = ['hover:bg-amber-100', 'hover:bg-blue-50', 'hover:bg-brutal-peach', 'hover:bg-brutal-mint'];
+          socialContainer.innerHTML = data.socialLinks.map((item, idx) => {
+            const iconSvg = getSocialIconSvg(item.platform);
+            const hover = hoverColors[idx % hoverColors.length];
+            return `
+              <a href="${item.url}" target="_blank" rel="noopener noreferrer" 
+                 class="tactile-btn flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border-2 border-ink shadow-brutal-sm rounded font-mono text-xs font-bold text-ink ${hover}">
+                ${iconSvg}
+                <span>${item.platform}</span>
+              </a>
+            `;
+          }).join('');
+        }
+
+        // Metrics Section
+        if (Array.isArray(data.metrics)) {
+          const metricsContainer = document.getElementById('metricsContainer');
+          const metricColors = ['bg-brutal-accentYellow', 'bg-brutal-mint', 'bg-brutal-lilac', 'bg-brutal-peach'];
+          metricsContainer.innerHTML = data.metrics.map((m, idx) => {
+            const colorClass = metricColors[idx % metricColors.length];
+            return `
+              <div class="tactile-chip ${colorClass} border-2 border-ink shadow-brutal-sm rounded p-3.5 text-center flex flex-col justify-center">
+                <span class="font-display text-2xl sm:text-3xl text-ink font-extrabold leading-none">${m.value}</span>
+                <span class="font-mono text-[11px] uppercase font-bold text-ink mt-1.5 tracking-wider">${m.label}</span>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // Footer
+        if (data.footer && data.footer.copyright) {
+          document.getElementById('footerCopyright').textContent = data.footer.copyright;
+        }
+
+      } catch (err) {
+        console.warn('Dynamic JSON binding fallback used:', err);
+      }
+
+      // 3. Email Copy Micro-interaction
+      const copyBtn = document.getElementById('copyEmailBtn');
+      const copyNotice = document.getElementById('copyNotice');
+      const copyIcon = document.getElementById('copyIcon');
+      const emailText = document.getElementById('profileEmail');
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          const emailToCopy = emailText ? emailText.textContent.trim() : '';
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(emailToCopy);
+            } else {
+              const tempInput = document.createElement('input');
+              tempInput.value = emailToCopy;
+              document.body.appendChild(tempInput);
+              tempInput.select();
+              document.execCommand('copy');
+              document.body.removeChild(tempInput);
+            }
+
+            copyNotice.classList.remove('opacity-0');
+            copyNotice.classList.add('opacity-100');
+            copyIcon.textContent = 'check_circle';
+            copyIcon.classList.add('text-emerald-600');
+
+            setTimeout(() => {
+              copyNotice.classList.remove('opacity-100');
+              copyNotice.classList.add('opacity-0');
+              copyIcon.textContent = 'content_copy';
+              copyIcon.classList.remove('text-emerald-600');
+            }, 2200);
+
+          } catch (err) {
+            console.error('Clipboard copy failed:', err);
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
